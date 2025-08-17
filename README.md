@@ -63,7 +63,7 @@ Copy
 Edit
 python -m aiops_validator.cli validate examples/sample.json \
     --kind json --json-schema schemas/schema.json
-##🏗️ Architecture
+## 🏗️ Architecture
 csharp
 Copy
 Edit
@@ -81,7 +81,7 @@ Reporter: Outputs Markdown/HTML/JSON reports.
 
 Fixes: Suggests patches or snippets to resolve issues.
 
-##✅ Roadmap
+## ✅ Roadmap
  Add CSV validation (via frictionless or pandera).
 
  Implement anomaly detection (range checks, statistical outliers).
@@ -90,13 +90,13 @@ Fixes: Suggests patches or snippets to resolve issues.
 
  Dockerize for deployment in research pipelines.
 
-##🤝 Contributing
+## 🤝 Contributing
 Pull requests welcome! See CONTRIBUTING.md.
 
-##📜 License
+## 📜 License
 MIT © 2025 Eugene Taaba
 
-##👨‍💻 Author
+## 👨‍💻 Author
 Eugene Taaba — LinkedIn · Twitter
 
 yaml
