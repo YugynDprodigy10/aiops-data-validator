@@ -1,8 +1,8 @@
 # 🚀 AI Ops Data Validator
 *AI-powered schema validation for scientific mission datasets (NASA PDS4, XML, JSON, CSV)*  
 
-[![CI](https://github.com/YOUR-USERNAME/aiops-data-validator/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR-USERNAME/aiops-data-validator/actions)
-[![Coverage](https://img.shields.io/codecov/c/github/YOUR-USERNAME/aiops-data-validator?logo=codecov)](https://codecov.io/gh/YOUR-USERNAME/aiops-data-validator)
+[![CI](https://github.com/YugynDprodigy10/aiops-data-validator/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR-USERNAME/aiops-data-validator/actions)
+[![Coverage](https://img.shields.io/codecov/c/github/YugynDprodigy10/aiops-data-validator?logo=codecov)](https://codecov.io/gh/YOUR-USERNAME/aiops-data-validator)
 ![Python](https://img.shields.io/badge/python-3.10%2B-blue?logo=python)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
@@ -99,9 +99,9 @@ Pull requests welcome! See [CONTRIBUTING.md](CONTRIBUTING.md).
 ---
 
 ## 📜 License
-MIT © 2025 Eugene Taaba  
+MIT © 2025 Eugene Taabazuing  
 
 ---
 
 ## 👨‍💻 Author
-**Eugene Taaba** — [LinkedIn](https://www.linkedin.com/in/YOUR-LINK) · [Twitter](https://twitter.com/YOUR-HANDLE)
+**Eugene Taabazuing** — [LinkedIn](https://www.linkedin.com/in/eugene-taabazuing-95322798/) 
