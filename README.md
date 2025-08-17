@@ -28,10 +28,10 @@ It goes beyond schema checks: the built-in AI reasoning layer **explains validat
 $ aiops-validate examples/bad_label.xml --kind xml --xsd schemas/pds4.xsd --schematron schemas/pds4.sch
 
 Wrote report.md
-Example Report (Markdown Snippet)
-markdown
-Copy
-Edit
+```
+
+### Example Report (Markdown Snippet)
+```markdown
 # Validation Report — bad_label.xml
 
 **Summary:** FAIL  
@@ -41,77 +41,67 @@ Errors: 3 | Warnings: 1
 - Path: `/Product_Observational/Observation_Area`  
 - Message: Missing child element required by XSD.  
 - Suggested fix: Add `<Observation_Area>` element according to schema.  
-(Insert screenshot or GIF here of CLI output + rendered HTML report)
+```
 
-##⚡ Quick Start
-Install
-bash
-Copy
-Edit
+*(Insert screenshot or GIF here of CLI output + rendered HTML report)*
+
+---
+
+## ⚡ Quick Start
+
+### Install
+```bash
 git clone https://github.com/YOUR-USERNAME/aiops-data-validator.git
 cd aiops-data-validator
 pip install -r requirements.txt
-Validate XML
-bash
-Copy
-Edit
-python -m aiops_validator.cli validate examples/bad_label.xml \
-    --kind xml --xsd schemas/pds4.xsd --schematron schemas/pds4.sch
-Validate JSON
-bash
-Copy
-Edit
-python -m aiops_validator.cli validate examples/sample.json \
-    --kind json --json-schema schemas/schema.json
+```
+
+### Validate XML
+```bash
+python -m aiops_validator.cli validate examples/bad_label.xml     --kind xml --xsd schemas/pds4.xsd --schematron schemas/pds4.sch
+```
+
+### Validate JSON
+```bash
+python -m aiops_validator.cli validate examples/sample.json     --kind json --json-schema schemas/schema.json
+```
+
+---
+
 ## 🏗️ Architecture
-csharp
-Copy
-Edit
+```
 aiops_validator/
   ├── core/         # Models, reasoner, reporting
   ├── validators/   # XML, JSON, CSV validators
   ├── fixes/        # Suggested fix generation
   ├── templates/    # Report templates
   └── cli.py        # Command-line entrypoint
-Validators: Handle schema-level checks (XSD/JSON Schema).
+```
 
-Reasoner: Interprets raw logs, produces plain-English explanations.
+- **Validators**: Handle schema-level checks (XSD/JSON Schema).  
+- **Reasoner**: Interprets raw logs, produces plain-English explanations.  
+- **Reporter**: Outputs Markdown/HTML/JSON reports.  
+- **Fixes**: Suggests patches or snippets to resolve issues.  
 
-Reporter: Outputs Markdown/HTML/JSON reports.
-
-Fixes: Suggests patches or snippets to resolve issues.
+---
 
 ## ✅ Roadmap
- Add CSV validation (via frictionless or pandera).
+- [ ] Add CSV validation (via `frictionless` or `pandera`).  
+- [ ] Implement anomaly detection (range checks, statistical outliers).  
+- [ ] Enable automated fixes with JSON Patch / XML transformations.  
+- [ ] Dockerize for deployment in research pipelines.  
 
- Implement anomaly detection (range checks, statistical outliers).
-
- Enable automated fixes with JSON Patch / XML transformations.
-
- Dockerize for deployment in research pipelines.
+---
 
 ## 🤝 Contributing
-Pull requests welcome! See CONTRIBUTING.md.
+Pull requests welcome! See [CONTRIBUTING.md](CONTRIBUTING.md).  
+
+---
 
 ## 📜 License
-MIT © 2025 Eugene Taaba
+MIT © 2025 Eugene Taaba  
+
+---
 
 ## 👨‍💻 Author
-Eugene Taaba — LinkedIn · Twitter
-
-yaml
-Copy
-Edit
-
----
-
-### 🔑 What this does for you:
-- **Badges** → shows CI, coverage, and professional setup.  
-- **Demo section** → recruiters see output immediately.  
-- **Quick Start** → easy to run, low friction.  
-- **Architecture & Roadmap** → shows you think like an engineer, not just a coder.  
-- **Polished profile** → when pinned, this repo *screams* “production-ready engineer.”  
-
----
-
-👉 Want me to also draft a **GitHub Actions CI workflow (pytest + coverage)** so you get that shiny “Build
+**Eugene Taaba** — [LinkedIn](https://www.linkedin.com/in/YOUR-LINK) · [Twitter](https://twitter.com/YOUR-HANDLE)
