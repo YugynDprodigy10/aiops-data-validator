@@ -1,7 +1,7 @@
 
 from abc import ABC, abstractmethod
 from typing import List
-from aiops_validator.core.models import ValidationIssue
+from core.models import ValidationIssue   # <-- change this line
 
 class BaseValidator(ABC):
     @abstractmethod
