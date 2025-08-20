@@ -1,4 +1,3 @@
-
 name: CI
 
 on:
@@ -11,7 +10,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     env:
-      PYTHONPATH: ${{ github.workspace }}
+      PYTHONPATH: ${{ github.workspace }}   # allow `from core...` and `from validators...`
     strategy:
       matrix:
         python-version: ["3.10", "3.11"]
@@ -29,13 +28,12 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-          # pytest-cov for coverage (optional but useful)
           pip install pytest-cov
 
       - name: Run tests with coverage
         run: |
           pytest -q --maxfail=1 --disable-warnings \
-            --cov=aiops_validator --cov-report=xml
+            --cov=core --cov=validators --cov-report=xml
 
       - name: Upload coverage.xml as artifact (optional)
         uses: actions/upload-artifact@v4
@@ -43,7 +41,7 @@ jobs:
           name: coverage-xml
           path: coverage.xml
 
-      # Optional: upload to Codecov (enable if you set CODECOV_TOKEN in repo secrets)
+      # Optional: Codecov upload (uncomment after adding CODECOV_TOKEN secret)
       # - name: Upload coverage to Codecov
       #   uses: codecov/codecov-action@v4
       #   with:
