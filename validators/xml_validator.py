@@ -1,6 +1,6 @@
-# aiops_validator/validators/xml_validator.py
+
 from .base import BaseValidator
-from aiops_validator.core.models import ValidationIssue
+from core.models import ValidationIssue
 from lxml import etree
 import xmlschema
 import uuid
@@ -60,4 +60,5 @@ class XMLValidator(BaseValidator):
                         message=log.message
                     ))
         return issues
+
 
