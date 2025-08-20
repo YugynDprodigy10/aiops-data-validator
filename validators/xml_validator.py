@@ -4,6 +4,7 @@ from aiops_validator.core.models import ValidationIssue
 from lxml import etree
 import xmlschema
 import uuid
+from core.models import ValidationIssue
 
 class XMLValidator(BaseValidator):
     def __init__(self, xsd_path: str, schematron_path: str | None = None):
@@ -59,3 +60,4 @@ class XMLValidator(BaseValidator):
                         message=log.message
                     ))
         return issues
+
