@@ -1,11 +1,11 @@
 # aiops_validator/cli.py
 import json, sys
 import typer
-from aiops_validator.validators.xml_validator import XMLValidator
-from aiops_validator.validators.json_validator import JSONValidator
-from aiops_validator.core.models import ValidationReport
-from aiops_validator.core.reasoner import enrich_with_suggestions, summarize
-from aiops_validator.core.reporter import to_markdown
+from validators.xml_validator import XMLValidator
+from validators.json_validator import JSONValidator
+from core.models import ValidationReport
+from core.reasoner import enrich_with_suggestions, summarize
+from core.reporter import to_markdown
 
 app = typer.Typer()
 
@@ -47,3 +47,4 @@ def validate(
 
 if __name__ == "__main__":
     app()
+
