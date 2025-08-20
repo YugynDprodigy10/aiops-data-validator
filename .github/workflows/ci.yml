@@ -6,11 +6,16 @@ on:
   pull_request:
     branches: [ "main" ]
 
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
     runs-on: ubuntu-latest
     env:
-      PYTHONPATH: ${{ github.workspace }}   # allow `from core...` and `from validators...`
+      PYTHONPATH: ${{ github.workspace }}   # allow 'from core...' and 'from validators...'
+
     strategy:
       matrix:
         python-version: ["3.10", "3.11"]
@@ -24,11 +29,59 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ matrix.python-version }}-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-${{ matrix.python-version }}-
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-          pip install pytest-cov
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          else
+            pip install xmlschema lxml jsonschema jinja2 typer rich pydantic pytest pytest-cov
+          fi
+
+      - name: Show workspace tree (helpful for path issues)
+        run: |
+          echo "PWD=$(pwd)"
+          ls -la
+          echo "----"
+          ls -la core || true
+          ls -la validators || true
+          ls -la schemas || true
+          ls -la examples || true
+          ls -la tests || true
+
+      - name: Quick import & file checks
+        run: |
+          python - <<'PY'
+          import os, sys
+          print("PYTHONPATH:", os.environ.get("PYTHONPATH"))
+          # Import sanity
+          try:
+              from validators.xml_validator import XMLValidator
+              from validators.json_validator import JSONValidator
+              from core.models import ValidationIssue
+              print("Imports OK ✅")
+          except Exception as e:
+              print("Import failure ❌:", repr(e))
+              sys.exit(1)
+          # File sanity for tests
+          missing = []
+          for p in ["schemas/minimal.xsd", "examples/bad_label.xml",
+                    "schemas/sample.schema.json", "examples/bad_sample.json"]:
+              if not os.path.exists(p):
+                  missing.append(p)
+          if missing:
+              print("Missing required files for tests:", missing)
+              sys.exit(1)
+          print("File checks OK ✅")
+          PY
 
       - name: Run tests with coverage
         run: |
@@ -41,7 +94,7 @@ jobs:
           name: coverage-xml
           path: coverage.xml
 
-      # Optional: Codecov upload (uncomment after adding CODECOV_TOKEN secret)
+      # Optional: upload to Codecov after adding CODECOV_TOKEN secret
       # - name: Upload coverage to Codecov
       #   uses: codecov/codecov-action@v4
       #   with:
