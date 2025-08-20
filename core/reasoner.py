@@ -1,6 +1,6 @@
 # aiops_validator/core/reasoner.py
 from collections import defaultdict
-from aiops_validator.core.models import ValidationIssue, Suggestion, ValidationReport
+from core.models import ValidationIssue, Suggestion, ValidationReport
 
 COMMON_PATTERNS = [
     # (predicate, suggestion builder)
@@ -48,3 +48,4 @@ def summarize(report: ValidationReport) -> str:
         sample = vals[0]
         parts.append(f"- {k}: {len(vals)} issue(s). Example @ {sample.path}: {sample.message}")
     return "\n".join(parts)
+
