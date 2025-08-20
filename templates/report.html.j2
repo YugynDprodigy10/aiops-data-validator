@@ -1,0 +1,38 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Validation Report — {{ report.file }}</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 2rem; line-height: 1.5; }
+    .badge { display:inline-block; padding:.2rem .5rem; border-radius:.4rem; background:#eee; }
+    .error { color:#b00020; } .warning { color:#8a6d3b; } .info { color:#31708f; }
+    details { margin:.5rem 0; }
+    code { background:#f6f8fa; padding:.1rem .3rem; border-radius:.25rem; }
+    pre { background:#f6f8fa; padding:1rem; border-radius:.5rem; overflow:auto; }
+  </style>
+</head>
+<body>
+  <h1>Validation Report — {{ report.file }}</h1>
+  <p><strong>Summary:</strong> <span class="badge">{{ "PASS" if report.passed else "FAIL" }}</span>
+  &nbsp; Errors: {{ report.error_count }} | Warnings: {{ report.warning_count }}</p>
+
+  {% for i in report.issues %}
+    <details open>
+      <summary><strong>#{{ loop.index }}</strong> <span class="{{ i.severity }}">{{ i.severity|upper }}</span> — {{ i.issue_type }} at <code>{{ i.path }}</code></summary>
+      <ul>
+        <li><strong>Rule:</strong> <code>{{ i.rule or "-" }}</code></li>
+        <li><strong>Message:</strong> {{ i.message }}</li>
+        {% if i.suggestion %}
+          <li><strong>Suggested fix:</strong> {{ i.suggestion.message }}</li>
+          {% if i.suggestion.example %}
+            <pre><code>{{ i.suggestion.example }}</code></pre>
+          {% endif %}
+        {% endif %}
+      </ul>
+    </details>
+  {% endfor %}
+</body>
+</html>

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "title",
+    "instrument"
+  ],
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "instrument": {
+      "type": "string",
+      "enum": [
+        "IRIS",
+        "MAG",
+        "IMG"
+      ]
+    },
+    "value": {
+      "type": "number"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+
+# Validation Report — {{ report.file }}
+
+**Summary:** {{ "PASS" if report.passed else "FAIL" }}  
+Errors: {{ report.error_count }} | Warnings: {{ report.warning_count }}
+
+{% for i in report.issues %}
+## {{ loop.index }}. {{ i.severity|upper }} — {{ i.issue_type }}
+- Path: `{{ i.path }}`
+- Rule: `{{ i.rule or "-" }}`
+- Message: {{ i.message }}
+{% if i.suggestion %}
+- Suggested fix: {{ i.suggestion.message }}
+{% if i.suggestion.example %}
+```xml
+{{ i.suggestion.example }}
+```
+{% endif %}
+{% endif %}
+
+{% endfor %}
