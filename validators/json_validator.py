@@ -1,6 +1,4 @@
-
-from .base import BaseValidator
-from aiops_validator.core.models import ValidationIssue
+from core.models import ValidationIssue
 from jsonschema import Draft202012Validator
 import json, uuid
 
@@ -11,7 +9,7 @@ def to_json_pointer(path_deque) -> str:
         parts.append(p)
     return "/" + "/".join(parts)
 
-class JSONValidator(BaseValidator):
+class JSONValidator:
     def __init__(self, schema_path: str):
         with open(schema_path, "r", encoding="utf-8") as f:
             self.schema = json.load(f)
@@ -20,7 +18,6 @@ class JSONValidator(BaseValidator):
     def validate(self, file_path: str):
         with open(file_path, "r", encoding="utf-8") as f:
             instance = json.load(f)
-
         issues = []
         for err in self.validator.iter_errors(instance):
             issues.append(ValidationIssue(
