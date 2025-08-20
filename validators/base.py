@@ -1,7 +1,7 @@
 
 from abc import ABC, abstractmethod
 from typing import List
-from core.models import ValidationIssue   # <-- change this line
+from core.models import ValidationIssue   
 
 class BaseValidator(ABC):
     @abstractmethod
