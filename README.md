@@ -42,8 +42,13 @@ Errors: 3 | Warnings: 1
 - Message: Missing child element required by XSD.  
 - Suggested fix: Add `<Observation_Area>` element according to schema.  
 ```
+## 🖼️ Screenshots
 
-*(Insert screenshot or GIF here of CLI output + rendered HTML report)*
+<p align="center">
+  <img src="assets/screenshots/screenshot1.png" alt="Streamlit UI — drag & drop and Run validation" width="49%" />
+  <img src="assets/screenshots/screenshot2.png" alt="HTML report — errors, warnings, explanations and suggested fixes" width="49%" />
+</p>
+
 
 ---
 
