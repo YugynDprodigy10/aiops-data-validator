@@ -18,7 +18,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'   # matches your README badge
+          python-version: '3.10'
 
       - name: Cache pip
         uses: actions/cache@v4
@@ -34,11 +34,22 @@ jobs:
           pip install -r requirements.txt
           pip install pytest pytest-cov
 
-      # Make repo root importable: tests can `import valmods`, `import core`, etc.
-      - name: Ensure repo root on PYTHONPATH
-        run: echo "PYTHONPATH=$PWD" >> $GITHUB_ENV
+      # (Optional) one-time debug; you can remove after first green run
+      - name: Debug import
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: |
+          python - <<'PY'
+          import os, sys, pkgutil
+          print("workspace:", os.getcwd())
+          print("sys.path[0]:", sys.path[0])
+          print("can import valmods?", bool(pkgutil.find_loader("valmods")))
+          PY
 
       - name: Run tests
+        env:
+          # Make repo root importable for `from valmods ...`
+          PYTHONPATH: ${{ github.workspace }}
         run: pytest -q --maxfail=1 --disable-warnings --cov --cov-report=xml
 
       - name: Upload coverage to Codecov
