@@ -1,4 +1,4 @@
-# aiops_validator/core/reasoner.py
+from typing import List
 from collections import defaultdict
 from core.models import ValidationIssue, Suggestion, ValidationReport
 
@@ -27,7 +27,8 @@ COMMON_PATTERNS = [
     ),
 ]
 
-def enrich_with_suggestions(issues: list[ValidationIssue]) -> None:
+def enrich_with_suggestions(issues: List[ValidationIssue]) -> None:
+    """Attach a Suggestion to issues that match common patterns."""
     for i in issues:
         for pred, build in COMMON_PATTERNS:
             if pred(i) and i.suggestion is None:
@@ -35,17 +36,19 @@ def enrich_with_suggestions(issues: list[ValidationIssue]) -> None:
                 break
 
 def summarize(report: ValidationReport) -> str:
-    # Group by high-level cause for a human-friendly paragraph
+    """Produce a human-friendly summary for the report."""
     buckets = defaultdict(list)
     for i in report.issues:
-        key = ("namespace" if (i.suggestion and "namespace" in i.suggestion.message.lower())
-               else "required" if "required" in i.message.lower()
-               else "type" if "type" in i.message.lower()
-               else i.issue_type)
+        key = (
+            "namespace" if (i.suggestion and "namespace" in i.suggestion.message.lower())
+            else "required" if "required" in i.message.lower()
+            else "type" if "type" in i.message.lower()
+            else i.issue_type
+        )
         buckets[key].append(i)
+
     parts = [f"{report.file}: {report.error_count} error(s), {report.warning_count} warning(s)."]
     for k, vals in buckets.items():
         sample = vals[0]
         parts.append(f"- {k}: {len(vals)} issue(s). Example @ {sample.path}: {sample.message}")
     return "\n".join(parts)
-
