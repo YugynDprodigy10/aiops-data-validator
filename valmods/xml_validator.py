@@ -9,7 +9,6 @@ class XMLValidator:
     standard = "PDS4-XML"
 
     def __init__(self, xsd_path: str, schematron_path: str = None):
-        # Accept either file paths or http(s) URLs
         parsed = urlparse(xsd_path)
         if parsed.scheme in ("http", "https"):
             xsd_uri = xsd_path
@@ -29,7 +28,6 @@ class XMLValidator:
         except XMLSchemaValidationError:
             for err in self.schema.iter_errors(path):
                 issues.append(ValidationIssue(
-                    file=path,
                     issue_type="XSD-VALIDATION",
                     severity="error",
                     path=str(err.path) or "(unknown)",
