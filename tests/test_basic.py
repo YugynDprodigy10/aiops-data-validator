@@ -1,6 +1,6 @@
 
-from validators.json_validator import JSONValidator
-from validators.xml_validator import XMLValidator
+from valmods.json_validator import JSONValidator
+from valmods.xml_validator import XMLValidator
 
 def test_json_validator():
     schema = "schemas/sample.schema.json"
