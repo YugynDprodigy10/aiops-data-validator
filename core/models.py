@@ -1,34 +1,33 @@
-
+# core/models.py
 from dataclasses import dataclass, field
-from typing import List, Optional, Literal, Dict, Any
-
-Severity = Literal["error", "warning", "info"]
-IssueType = Literal["schema", "schematron", "wellformedness", "conformance"]
+from typing import Optional, List
+from uuid import uuid4
 
 @dataclass
 class Suggestion:
     message: str
-    patch: Optional[Dict[str, Any]] = None   # JSON Patch ops or XML edit hint
-    example: Optional[str] = None            # tiny snippet showing the fix
+    example: Optional[str] = None
 
 @dataclass
 class ValidationIssue:
-    id: str
-    issue_type: IssueType
-    severity: Severity
-    path: str                 # XPath or JSON Pointer
-    line: Optional[int] = None
-    column: Optional[int] = None
-    rule: Optional[str] = None # schema path / schematron rule id
-    message: str = ""
-    context: Dict[str, Any] = field(default_factory=dict)
-    suggestion: Optional[Suggestion] = None
+    # non-default fields first
+    issue_type: str           # e.g., "XSD-VALIDATION", "JSON-SCHEMA"
+    severity: str             # "error" | "warning" | "info"
+    path: str                 # xpath/jsonpath/row:col
+    message: str
+    suggestion: Optional[str] = None
+    # default field last
+    id: str = field(default_factory=lambda: uuid4().hex[:8])
 
 @dataclass
 class ValidationReport:
     file: str
-    passed: bool
-    error_count: int
-    warning_count: int
-    issues: List[ValidationIssue] = field(default_factory=list)
+    issues: List[ValidationIssue]
 
+    @property
+    def error_count(self) -> int:
+        return sum(1 for i in self.issues if i.severity == "error")
+
+    @property
+    def warning_count(self) -> int:
+        return sum(1 for i in self.issues if i.severity == "warning")
