@@ -34,7 +34,10 @@ jobs:
           pip install -r requirements.txt
           pip install pytest pytest-cov
 
-      # Make repo root importable for test imports like `from valmods ...`
+      - name: Install package (editable)
+        run: pip install -e .
+
+      # Keep repo root on PYTHONPATH too (belt & suspenders)
       - name: Run tests
         env:
           PYTHONPATH: ${{ github.workspace }}
