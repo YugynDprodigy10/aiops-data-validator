@@ -9,7 +9,6 @@ class XMLValidator:
     standard = "PDS4-XML"
 
     def __init__(self, xsd_path: str, schematron_path: str = None):
-        # Accept http(s) URLs or local file paths
         parsed = urlparse(xsd_path)
         if parsed.scheme in ("http", "https"):
             xsd_uri = xsd_path
