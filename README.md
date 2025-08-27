@@ -56,7 +56,7 @@ Errors: 3 | Warnings: 1
 
 ### Install
 ```bash
-git clone https://github.com/YOUR-USERNAME/aiops-data-validator.git
+git clone https://github.com/YugynDprodigy10/aiops-data-validator.git
 cd aiops-data-validator
 pip install -r requirements.txt
 ```
