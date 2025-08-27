@@ -56,13 +56,8 @@ if run:
 
             issues = v.validate(str(path))
             enrich_with_suggestions(issues)
-            report = ValidationReport(
-                file=str(path),
-                passed=(len([i for i in issues if i.severity == "error"]) == 0),
-                error_count=len([i for i in issues if i.severity == "error"]),
-                warning_count=len([i for i in issues if i.severity == "warning"]),
-                issues=issues
-            )
+            report = ValidationReport(file=str(path), issues=issues)
+
             results.append((path, report))
 
     # Summary tiles

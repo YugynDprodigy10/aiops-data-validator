@@ -1,4 +1,5 @@
 # core/models.py
+
 from dataclasses import dataclass, field
 from typing import Optional, List
 from uuid import uuid4
@@ -10,13 +11,12 @@ class Suggestion:
 
 @dataclass
 class ValidationIssue:
-    # non-default fields first
-    issue_type: str           # e.g., "XSD-VALIDATION", "JSON-SCHEMA"
-    severity: str             # "error" | "warning" | "info"
-    path: str                 # xpath/jsonpath/row:col
+    issue_type: str
+    severity: str
+    path: str
     message: str
-    suggestion: Optional[str] = None
-    # default field last
+    rule: Optional[str] = None
+    suggestion: Optional[Suggestion] = None
     id: str = field(default_factory=lambda: uuid4().hex[:8])
 
 @dataclass
@@ -31,3 +31,8 @@ class ValidationReport:
     @property
     def warning_count(self) -> int:
         return sum(1 for i in self.issues if i.severity == "warning")
+
+    @property
+    def passed(self) -> bool:
+        # ✅ add this
+        return self.error_count == 0
