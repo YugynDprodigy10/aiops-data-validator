@@ -1,0 +1,14 @@
+required_columns: [id, name, score]
+types:
+  id: int
+  name: str
+  score: float
+rules:
+  - kind: nonempty
+    column: name
+  - kind: min
+    column: score
+    value: 0
+  - kind: max
+    column: score
+    value: 100

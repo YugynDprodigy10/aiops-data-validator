@@ -1,3 +1,4 @@
+# valmods/runner.py
 from pathlib import Path
 from typing import List, Tuple
 from valmods.detector import detect_kind
@@ -5,17 +6,17 @@ from valmods.xml_validator import XMLValidator
 from valmods.json_validator import JSONValidator
 try:
     from valmods.csv_validator import CSVValidator
-except ImportError:
-    CSVValidator = None  # optional
-
+except Exception:
+    CSVValidator = None
 from core.models import ValidationReport
 
-def run_validation(target: str, *, xsd_path: str=None, json_schema_path: str=None, csv_schema_path: str=None
+def run_validation(
+    target: str, *, xsd_path: str | None, json_schema_path: str | None,
+    csv_schema_path: str | None = None, schematron_path: str | None = None  # NEW
 ) -> List[Tuple[Path, ValidationReport]]:
     root = Path(target)
     files = [root] if root.is_file() else [p for p in root.rglob("*") if p.is_file()]
-    # lazy init
-    xml_v = XMLValidator(xsd_path) if xsd_path else None
+    xml_v = XMLValidator(xsd_path, schematron_path=schematron_path) if xsd_path else None  # CHANGED
     json_v = JSONValidator(json_schema_path) if json_schema_path else None
     csv_v = CSVValidator(csv_schema_path) if (csv_schema_path and CSVValidator) else None
 
